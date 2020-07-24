@@ -143,6 +143,23 @@ size_t tguiListView_addItemRow(tguiWidget* widget, const sfUint32** item, unsign
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+void tguiListView_insertItem(tguiWidget* widget, size_t index, const sfUint32* text)
+{
+    DOWNCAST(widget->This)->insertItem(index, text);
+}
+
+void tguiListView_insertItemRow(tguiWidget* widget, size_t index, const sfUint32** item, unsigned int itemLength)
+{
+    std::vector<sf::String> convertedItem;
+    convertedItem.reserve(itemLength);
+    for (unsigned int i = 0; i < itemLength; ++i)
+        convertedItem.push_back(item[i]);
+
+    DOWNCAST(widget->This)->insertItem(index, std::move(convertedItem));
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 sfBool tguiListView_changeItem(tguiWidget* widget, size_t index, const sfUint32** item, unsigned int itemLength)
 {
     std::vector<sf::String> convertedItem;
